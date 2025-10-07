@@ -26,17 +26,19 @@ export default function ModelWithTextures() {
     // … có thể thêm các map khác nếu cần
   };
 
-  const meshes = Object.values(nodes).filter((n) => n.isMesh) as THREE.Mesh[];
+  const meshes = Object.values(nodes).filter(
+    (n): n is THREE.Mesh => (n as THREE.Mesh).isMesh
+  );
 
   return (
-    <group dispose={null}>
+    <group dispose={null} scale={0.1}>
       {/* Rủi ro nhầm texture nếu thứ tự Object.values(nodes) không khớp thứ tự mong muốn */}
       {meshes.map((mesh, index) => {
         const newMesh = mesh.clone();
         newMesh.material = new THREE.MeshStandardMaterial({
           map: textures[index % textures.length],
-          roughness: 0.1, // độ nhám
-          metalness: 0.3, // độ kim loại
+          // roughness: 0.1, // độ nhám
+          // metalness: 0.3, // độ kim loại
         });
         return <primitive key={mesh.uuid} object={newMesh} />;
       })}

@@ -13,10 +13,9 @@ export default function ModelWithTextures() {
     "/anh-dep-15.jpg": ["_3DGeom6656356"],
   };
 
-  const texturePaths = Object.keys(textureGroups).reduce((acc, path) => {
-    acc[path] = path;
-    return acc;
-  }, {} as Record<string, string>);
+  const texturePaths = Object.fromEntries(
+    Object.keys(textureGroups).map((path) => [path, path])
+  );
 
   const textures = useTexture(texturePaths);
 
